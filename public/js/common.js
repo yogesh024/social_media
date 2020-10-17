@@ -44,6 +44,8 @@ $(document).on("click", ".likeButton", (event) => {
             
             button.find("span").text(postData.likes.length || "");
 
+            
+
         }
     })
 

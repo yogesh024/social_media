@@ -85,7 +85,7 @@ router.post("/:id/retweet", async (req, res, next) => {
     var repost = deletedPost;
 
     if (repost == null) {
-        repost = await Post.create({ postedBy: userId, repostData: postId })
+        repost = await Post.create({ postedBy: userId, retweetData: postId })
         .catch(error => {
             console.log(error);
             res.sendStatus(400);
@@ -93,14 +93,14 @@ router.post("/:id/retweet", async (req, res, next) => {
     }
 
     // Insert user like
-    req.session.user = await User.findByIdAndUpdate(userId, { [option]: { retweets: repost._id } }, { new: true})
+    req.session.user = await User.findByIdAndUpdate(userId, { [option]: { retweets: repost._id } }, { new: true })
     .catch(error => {
         console.log(error);
         res.sendStatus(400);
     })
 
     // Insert post like
-    var post = await Post.findByIdAndUpdate(postId, { [option]: { retweetUsers: userId } }, { new: true})
+    var post = await Post.findByIdAndUpdate(postId, { [option]: { retweetUsers: userId } }, { new: true })
     .catch(error => {
         console.log(error);
         res.sendStatus(400);

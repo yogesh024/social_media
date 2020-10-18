@@ -23,7 +23,6 @@ router.get("/:id", async (req, res, next) => {
 })
 
 router.post("/", async (req, res, next) => {
-
     if (!req.body.content) {
         console.log("Content param not sent with request");
         return res.sendStatus(400);
@@ -33,6 +32,11 @@ router.post("/", async (req, res, next) => {
         content: req.body.content,
         postedBy: req.session.user
     }
+
+    if(req.body.replyTo) {
+        postData.replyTo = req.body.replyTo;
+    }
+
 
     Post.create(postData)
     .then(async newPost => {

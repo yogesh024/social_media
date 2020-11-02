@@ -67,6 +67,12 @@ $("#deletePostModal").on("show.bs.modal", (event) => {
     $("#deletePostButton").data("id", postId);
 })
 
+$("#confirmPinModal").on("show.bs.modal", (event) => {
+    var button = $(event.relatedTarget);
+    var postId = getPostIdFromElement(button);
+    $("#pinPostButton").data("id", postId);
+})
+
 $("#deletePostButton").click((event) => {
     var postId = $(event.target).data("id");
 
@@ -76,6 +82,25 @@ $("#deletePostButton").click((event) => {
         success: (data, status, xhr) => {
 
             if(xhr.status != 202) {
+                alert("could not delete post");
+                return;
+            }
+            
+            location.reload();
+        }
+    })
+})
+
+$("#pinPostButton").click((event) => {
+    var postId = $(event.target).data("id");
+
+    $.ajax({
+        url: `/api/posts/${postId}`,
+        type: "PUT",
+        data: { pinned: true },
+        success: (data, status, xhr) => {
+
+            if(xhr.status != 204) {
                 alert("could not delete post");
                 return;
             }
@@ -327,7 +352,8 @@ function createPostHtml(postData, largeFont = false) {
 
     var buttons = "";
     if (postData.postedBy._id == userLoggedIn._id) {
-        buttons = `<button data-id="${postData._id}" data-toggle="modal" data-target="#deletePostModal"><i class='fas fa-times'></i></button>`;
+        buttons = `<button data-id="${postData._id}" data-toggle="modal" data-target="#confirmPinModal"><i class='fas fa-thumbtack'></i></button>
+                    <button data-id="${postData._id}" data-toggle="modal" data-target="#deletePostModal"><i class='fas fa-times'></i></button>`;
     }
 
     return `<div class='post ${largeFontClass}' data-id='${postData._id}'>

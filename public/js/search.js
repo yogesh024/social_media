@@ -27,7 +27,7 @@ function search(searchTerm, searchType) {
 
 
         if(searchType == "users") {
-
+            console.log(results);
         }
         else {
             outputPosts(results, $(".resultsContainer"))

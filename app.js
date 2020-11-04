@@ -68,4 +68,6 @@ io.on("connection", socket => {
         socket.emit("connected");
     })
 
+    socket.on("join room", room => socket.join(room));
+
 })

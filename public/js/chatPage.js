@@ -94,10 +94,13 @@ function messageSubmitted() {
     if(content != "") {
         sendMessage(content);
         $(".inputTextbox").val("");
+        socket.emit("stop typing", chatId);
+        typing = false;
     }
 }
 
 function sendMessage(content) {
+    
     $.post("/api/messages", { content: content, chatId: chatId }, (data, status, xhr) => {
 
         if(xhr.status != 201) {
@@ -107,6 +110,10 @@ function sendMessage(content) {
         }
         
         addChatMessageHtml(data);
+
+        if(connected) {
+            socket.emit("new message", data);
+        }
 
     })
 }

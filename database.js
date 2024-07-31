@@ -17,7 +17,7 @@ class Database {
     }
 
   connect() {
-    const DB = 'mongodb+srv://aaa:aaa@cluster0.dar6fgk.mongodb.net/book?retryWrites=true&w=majority';
+    const DB = 'mongodb+srv://aaa:aaa@cluster0.dar6fgk.mongodb.net/';
 
     mongoose.set('strictQuery', false);
 

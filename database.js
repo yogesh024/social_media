@@ -16,15 +16,23 @@ class Database {
         this.connect();
     }
 
-    connect() {
-        mongoose.connect("mongodb+srv://aaa:aaa@cluster0.dar6fgk.mongodb.net/")
-        .then(() => {
-            console.log("database connection successful");
-        })
-        .catch((err) => {
-            console.log("database connection error " + err);
-        })
-    }
+  connect() {
+    const DB = 'mongodb+srv://aaa:aaa@cluster0.dar6fgk.mongodb.net/book?retryWrites=true&w=majority';
+
+    mongoose.set('strictQuery', false);
+
+    mongoose.connect(DB, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(() => {
+        console.log("Database connection successful");
+    })
+    .catch((err) => {
+        console.log("Database connection error: " + err);
+    });
+}
+
 }
 
 module.exports = new Database();
